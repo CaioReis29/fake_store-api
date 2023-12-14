@@ -7,9 +7,9 @@ import 'package:fake_store_api/data/repositories/products_repository.dart';
 part 'all_products_state.dart';
 
 class AllProductsCubit extends Cubit<AllProductsState> {
-  AllProductsCubit(this.repo) : super(AllProductsInitial());
+  AllProductsCubit() : super(AllProductsInitial());
 
-  ProductsRepository repo;
+  ProductsRepository repo = ProductsRepository();
 
   Future<void> getAllProducts() async {
     emit(AllProductsLoading());
