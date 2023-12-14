@@ -42,6 +42,18 @@ class MyTextField extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.red,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.transparent,
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(
@@ -57,7 +69,10 @@ class MyTextField extends StatelessWidget {
         filled: true,
         fillColor: Colors.grey.shade200,
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey[700]),
+        hintStyle: TextStyle(
+          color: Colors.grey[700],
+          fontSize: 18,
+        ),
         errorText: errorMessage,
       ),
     );
