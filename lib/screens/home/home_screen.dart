@@ -1,9 +1,12 @@
+import 'package:fake_store_api/common/custom_shimmer.dart';
 import 'package:fake_store_api/components/grid_products.dart';
+import 'package:fake_store_api/components/my_drawer.dart';
 import 'package:fake_store_api/components/searchbar_product.dart';
-import 'package:fake_store_api/cubits/cubit/all_products_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
+
+import '../../cubits/products_cubit/all_products_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,13 +41,25 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      drawer: const Drawer(),
+      drawer: const MyDrawer(),
       body: BlocBuilder<AllProductsCubit, AllProductsState>(
         bloc: productsCubit,
         builder: (context, state) {
           if (state is AllProductsLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return GridView.count(
+              physics: const BouncingScrollPhysics(),
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 0.80,
+              children: List.generate(
+                10,
+                (index) => CustomShimmer(
+                  height: MediaQuery.sizeOf(context).height * 0.28,
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
             );
           } else if (state is AllProductsFailure) {
             return const Center(

@@ -1,3 +1,4 @@
+import 'package:fake_store_api/screens/auth/auth_screen.dart';
 import 'package:fake_store_api/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomeScreen(),
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        // '/product_datails': (context) => const HomeScreen(),
+        '/auth_screen': (context) => const AuthScreen(),
+      },
     );
   }
 }
