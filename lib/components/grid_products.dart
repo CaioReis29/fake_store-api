@@ -15,7 +15,7 @@ class GridProducts extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        childAspectRatio: 0.55,
+        childAspectRatio: 0.53,
       ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
@@ -38,7 +38,7 @@ class GridProducts extends StatelessWidget {
             Text(
               product.title!,
               style: const TextStyle(
-                fontSize: 17,
+                fontSize: 20,
                 color: Colors.white60,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -51,7 +51,8 @@ class GridProducts extends StatelessWidget {
               textAlign: TextAlign.left,
               style: const TextStyle(
                 color: Colors.grey,
-                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
             const SizedBox(
@@ -59,8 +60,19 @@ class GridProducts extends StatelessWidget {
             ),
             OutlinedButton.icon(
               onPressed: () {},
-              icon: const Icon(Icons.local_mall_rounded),
-              label: const Text("More Details"),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              icon: Icon(
+                Icons.local_mall_rounded,
+                color: Theme.of(context).primaryColor,
+              ),
+              label: Text(
+                "More Details",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           ],
         );
