@@ -1,5 +1,4 @@
-import 'package:fake_store_api/screens/auth/sign_in/sign_in_screen.dart';
-import 'package:fake_store_api/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:fake_store_api/screens/auth/auth_screen.dart';
 import 'package:fake_store_api/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -36,8 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/products': (context) => const HomeScreen(),
         // '/product_datails': (context) => const HomeScreen(),
-        '/sign_in': (context) => const SignInScreen(),
-        '/sign_up': (context) => const SignUpScreen(),
+        '/auth_screen': (context) => const AuthScreen(),
       },
     );
   }
