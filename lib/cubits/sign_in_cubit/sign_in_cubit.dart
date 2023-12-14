@@ -15,6 +15,17 @@ class SignInCubit extends Cubit<SignInState> {
   final TextEditingController userName = TextEditingController();
   final TextEditingController password = TextEditingController();
 
+  bool isLoginPasswordShowing = true;
+
+  IconData suffixIcon = Icons.visibility;
+
+  void changeLoginPasswordSuffixIcon() {
+    isLoginPasswordShowing = !isLoginPasswordShowing;
+    suffixIcon =
+        isLoginPasswordShowing ? Icons.visibility : Icons.visibility_off;
+    emit(ChangeLoginPasswordSuffixIcon());
+  }
+
   Future<void> signIn() async {
     emit(SignInProccess());
     try {
