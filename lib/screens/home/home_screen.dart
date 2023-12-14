@@ -1,9 +1,10 @@
 import 'package:fake_store_api/components/grid_products.dart';
 import 'package:fake_store_api/components/searchbar_product.dart';
-import 'package:fake_store_api/cubits/cubit/all_products_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
+
+import '../../cubits/products_cubit/all_products_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
