@@ -1,3 +1,6 @@
+import 'package:fake_store_api/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:fake_store_api/data/repositories/auth/sign_in/sign_in_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fake_store_api/screens/auth/sign_in_screen.dart';
 import 'package:fake_store_api/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
@@ -74,9 +77,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
-                    children: const [
-                      SignUpScreen(),
-                      SignInScreen(),
+                    children: [
+                      BlocProvider<SignInCubit>(
+                        create: (context) => SignInCubit(SignInRepository()),
+                        child: const SignInScreen(),
+                      ),
+                      const SignUpScreen(),
                     ],
                   ),
                 )
