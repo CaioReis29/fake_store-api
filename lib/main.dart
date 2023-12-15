@@ -5,7 +5,10 @@ import 'package:fake_store_api/app/my_app.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   Bloc.observer = SimpleBlocObserver();
+
   runApp(
     MultiBlocProvider(
       providers: [

@@ -19,8 +19,6 @@ class SignInRepository {
     });
     if (response.statusCode != 200) {
       throw HttpException(response.data);
-    } else if (response.data["retorno"] == "NOK") {
-      return false;
     }
     saveInfos(response.data);
     return true;
