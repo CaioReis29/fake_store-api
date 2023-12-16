@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromARGB(255, 243, 208, 113),
         textTheme: const TextTheme(
           bodySmall: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
             color: Color.fromARGB(255, 243, 208, 113),
           ),
           titleLarge: TextStyle(
