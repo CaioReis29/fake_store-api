@@ -1,5 +1,6 @@
 import 'package:fake_store_api/screens/auth/auth_screen.dart';
 import 'package:fake_store_api/screens/home/home_screen.dart';
+import 'package:fake_store_api/screens/single/single_product_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         '/home': (context) => const HomeScreen(),
-        // '/product_datails': (context) => const HomeScreen(),
+        '/product_details': (context) => const SingleProductScreen(),
         '/auth_screen': (context) => const AuthScreen(),
       },
     );
