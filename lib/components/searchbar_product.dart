@@ -13,7 +13,7 @@ class SearchbarProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
-      width: double.infinity,
+      width: MediaQuery.sizeOf(context).width * 0.9,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: TextFormField(
@@ -25,6 +25,7 @@ class SearchbarProduct extends StatelessWidget {
           onFieldSubmitted: (value) =>
               cubit.searchProducts(cubit.searchController.text),
           decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: Theme.of(context).primaryColor,
