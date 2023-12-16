@@ -42,40 +42,40 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       drawer: const MyDrawer(),
-      body: BlocBuilder<AllProductsCubit, AllProductsState>(
-        bloc: productsCubit,
-        builder: (context, state) {
-          if (state is AllProductsLoading) {
-            return GridView.count(
-              physics: const BouncingScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.80,
-              children: List.generate(
-                10,
-                (index) => CustomShimmer(
-                  height: MediaQuery.sizeOf(context).height * 0.28,
-                  width: MediaQuery.of(context).size.width / 2.2,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            );
-          } else if (state is AllProductsFailure) {
-            return const Center(
-              child: Text(
-                "Não foi possível carregar os produtos!",
-                style: TextStyle(
-                  color: Colors.red,
-                ),
-              ),
-            );
-          } else if (state is AllProductsSucess) {
-            return Column(
-              children: [
-                SearchbarProduct(cubit: productsCubit),
-                Expanded(
-                  child: RefreshIndicator(
+      body: Column(
+        children: [
+          SearchbarProduct(cubit: productsCubit),
+          Expanded(
+            child: BlocBuilder<AllProductsCubit, AllProductsState>(
+              bloc: productsCubit,
+              builder: (context, state) {
+                if (state is AllProductsLoading) {
+                  return GridView.count(
+                    physics: const BouncingScrollPhysics(),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.80,
+                    children: List.generate(
+                      10,
+                      (index) => CustomShimmer(
+                        height: MediaQuery.sizeOf(context).height * 0.27,
+                        width: MediaQuery.of(context).size.width / 2.2,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  );
+                } else if (state is AllProductsFailure) {
+                  return const Center(
+                    child: Text(
+                      "Products not found!",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                  );
+                } else if (state is AllProductsSucess) {
+                  return RefreshIndicator(
                     color: Theme.of(context).primaryColor,
                     backgroundColor: Colors.white,
                     displacement: 4,
@@ -95,18 +95,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         GridProducts(listProducts: state.products),
                       ],
                     ),
-                  ),
-                ),
-              ],
-            );
-          } else {
-            return const Center(
-              child: Text(
-                "Erro desconhecido!",
-              ),
-            );
-          }
-        },
+                  );
+                } else {
+                  return const Center(
+                    child: Text(
+                      "Error!",
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
