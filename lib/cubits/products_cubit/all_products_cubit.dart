@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:fake_store_api/data/models/all_products/products.dart';
-import 'package:fake_store_api/data/repositories/products_repository.dart';
+import 'package:fake_store_api/data/repositories/all_products/products_repository.dart';
 import 'package:flutter/material.dart';
 
 part 'all_products_state.dart';
