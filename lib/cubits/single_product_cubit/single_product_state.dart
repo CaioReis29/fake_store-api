@@ -8,4 +8,8 @@ final class SingleProductFailure extends SingleProductState {}
 
 final class SingleProductLoaging extends SingleProductState {}
 
-final class SingleProductSucess extends SingleProductState {}
+final class SingleProductSucess extends SingleProductState {
+  final Products product;
+
+  SingleProductSucess(this.product);
+}
