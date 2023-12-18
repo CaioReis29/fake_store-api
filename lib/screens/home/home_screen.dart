@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:fake_store_api/common/custom_shimmer.dart';
 import 'package:fake_store_api/components/grid_products.dart';
 import 'package:fake_store_api/components/my_drawer.dart';
 import 'package:fake_store_api/components/searchbar_product.dart';
+import 'package:fake_store_api/cubits/categories_cubit/all_categories_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
@@ -17,12 +20,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AllProductsCubit productsCubit = AllProductsCubit();
+  final AllCategoriesCubit categoryCubit = AllCategoriesCubit();
 
   final UtilsServices service = UtilsServices();
 
   @override
   void initState() {
     productsCubit.getAllProducts();
+    categoryCubit.getAllCategories();
     super.initState();
   }
 
@@ -90,6 +95,48 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Products",
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: BlocBuilder<AllCategoriesCubit,
+                              AllCategoriesState>(
+                            bloc: categoryCubit,
+                            builder: (context, state) {
+                              if (state is AllCategoriesLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (state is AllCategoriesFailure) {
+                                return const Center(
+                                  child: Text(
+                                    "Categories not found!",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              } else if (state is AllCategoriesSucess) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: SizedBox(
+                                    height: 100,
+                                    child: ListView.builder(
+                                      itemCount: state.categories.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        log(state.categories[index]);
+                                        return Text(state.categories[index]);
+                                      },
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: Text("Error"),
+                                );
+                              }
+                            },
                           ),
                         ),
                         GridProducts(listProducts: state.products),
