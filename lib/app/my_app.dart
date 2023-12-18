@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
             ),
-            side: BorderSide(
-              color: Theme.of(context).primaryColor,
+            side: const BorderSide(
+              color: Color.fromARGB(255, 243, 208, 113),
             ),
           ),
         ),
@@ -26,12 +26,13 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromARGB(255, 243, 208, 113),
         textTheme: const TextTheme(
           bodySmall: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w500,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 243, 208, 113),
           ),
           bodyMedium: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
           ),
           titleLarge: TextStyle(
             fontSize: 35,
