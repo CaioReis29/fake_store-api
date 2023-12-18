@@ -15,12 +15,9 @@ class DetailsProduct extends StatelessWidget {
         SizedBox(
           height: MediaQuery.sizeOf(context).height * 0.4,
           width: MediaQuery.sizeOf(context).width * 0.85,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.network(
-              cubit.product.image!,
-              fit: BoxFit.fill,
-            ),
+          child: Image.network(
+            cubit.product.image!,
+            fit: BoxFit.contain,
           ),
         ),
         Expanded(
@@ -42,11 +39,11 @@ class DetailsProduct extends StatelessWidget {
                     children: [
                       Text(
                         "Category:",
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
                         cubit.product.category!,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
@@ -58,25 +55,25 @@ class DetailsProduct extends StatelessWidget {
                     children: [
                       Text(
                         "Price:",
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
-                        service.priceToCurrency(cubit.product.price!),
-                        style: Theme.of(context).textTheme.bodySmall,
+                        service.priceToCurrency(cubit.product.price.toDouble()),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
                   const SizedBox(height: 15),
                   Text(
                     "Description:",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
                     cubit.product.description!,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -90,14 +87,36 @@ class DetailsProduct extends StatelessWidget {
             children: [
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.add_shopping_cart_outlined),
-                label: const Text("ADD to Cart"),
+                style: Theme.of(context).elevatedButtonTheme.style,
+                icon: Icon(
+                  Icons.add_shopping_cart_outlined,
+                  color: Theme.of(context).primaryColor,
+                ),
+                label: Text(
+                  "ADD to Cart",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               const SizedBox(height: 5),
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.shopping_bag_sharp),
-                label: const Text("Buy"),
+                style: Theme.of(context).elevatedButtonTheme.style,
+                icon: Icon(
+                  Icons.shopping_bag_sharp,
+                  color: Theme.of(context).primaryColor,
+                ),
+                label: Text(
+                  "Buy",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
