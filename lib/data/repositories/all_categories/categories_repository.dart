@@ -13,11 +13,7 @@ class CategoriesRepository {
       if (res.statusCode == 200) {
         final List<dynamic> categories = res.data;
 
-        if (categories is List<String>) {
-          return categories;
-        } else {
-          return [];
-        }
+        return categories.map((categorie) => categorie.toString()).toList();
       } else {
         return [];
       }
