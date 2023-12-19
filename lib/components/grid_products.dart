@@ -1,7 +1,7 @@
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
 import 'package:fake_store_api/data/models/all_products/products.dart';
 import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
-import 'package:fake_store_api/screens/single/single_product_screen.dart';
+import 'package:fake_store_api/screens/single_product/single_product_screen.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

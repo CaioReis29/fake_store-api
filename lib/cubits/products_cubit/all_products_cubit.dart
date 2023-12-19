@@ -25,6 +25,20 @@ class AllProductsCubit extends Cubit<AllProductsState> {
     }
   }
 
+  Future<void> getProductByFilter(String filter) async {
+    final result = await repo.getAllProducts();
+
+    final productFilter = result
+        .where(
+          (product) => product.category!.toLowerCase().contains(
+                filter.toLowerCase(),
+              ),
+        )
+        .toList();
+
+    emit(AllProductsSucess(products: productFilter));
+  }
+
   Future<void> searchProducts(String value) async {
     final result = await repo.getAllProducts();
     if (value.isEmpty) {
