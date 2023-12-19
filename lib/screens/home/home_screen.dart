@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fake_store_api/common/custom_shimmer.dart';
 import 'package:fake_store_api/components/grid_products.dart';
 import 'package:fake_store_api/components/my_drawer.dart';
@@ -117,17 +115,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               } else if (state is AllCategoriesSucess) {
                                 return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
+                                  padding: const EdgeInsets.only(
+                                    left: 10,
+                                    right: 10,
+                                    bottom: 10,
+                                  ),
                                   child: SizedBox(
-                                    height: 100,
-                                    child: ListView.builder(
-                                      itemCount: state.categories.length,
+                                    height: 30,
+                                    child: ListView.separated(
                                       scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        log(state.categories[index]);
-                                        return Text(state.categories[index]);
-                                      },
+                                      itemBuilder: (context, index) =>
+                                          ElevatedButton(
+                                        onPressed: () =>
+                                            productsCubit.getProductByFilter(
+                                                state.categories[index]),
+                                        child: Text(
+                                          state.categories[index],
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      separatorBuilder: (c, i) =>
+                                          const SizedBox(width: 10),
+                                      itemCount: state.categories.length,
                                     ),
                                   ),
                                 );
