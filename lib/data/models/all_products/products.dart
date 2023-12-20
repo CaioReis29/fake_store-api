@@ -11,6 +11,29 @@ class Products {
   String? image;
   Rating? rating;
 
+  Products copy({
+    int? id,
+    String? title,
+    dynamic price,
+    String? category,
+    String? image,
+    Rating? rating,
+    int? count,
+    dynamic rate,
+  }) =>
+      Products(
+        id: id,
+        title: title,
+        price: price,
+        description: description,
+        category: category,
+        image: image ?? "",
+        rating: Rating(
+          count: count,
+          rate: rate,
+        ),
+      );
+
   Products({
     this.id,
     this.title,

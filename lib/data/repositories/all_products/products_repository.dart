@@ -6,6 +6,7 @@ import 'package:fake_store_api/utils/endpoints.dart';
 
 class ProductsRepository {
   Dio dio = Dio();
+  // final ProductsDB _productsDB = ProductsDB.instance;
 
   Future<List<Products>> getAllProducts() async {
     try {
