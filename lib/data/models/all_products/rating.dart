@@ -3,8 +3,8 @@ class Rating {
   int? count;
 
   Rating({
-    this.rate,
-    this.count,
+    required this.rate,
+    required this.count,
   });
 
   Rating.fromJson(Map<String, dynamic> json) {
