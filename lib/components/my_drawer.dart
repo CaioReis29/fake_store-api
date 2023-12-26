@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -26,12 +27,12 @@ class MyDrawer extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(10),
+          Padding(
+            padding: const EdgeInsets.all(10),
             child: Text(
               "User: not found",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 20.sp,
               ),
             ),
           ),
@@ -53,7 +54,7 @@ class MyDrawer extends StatelessWidget {
               label: Text(
                 "Sign In",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: Theme.of(context).primaryColor,
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:fake_store_api/screens/single_product/single_product_screen.dart
 import 'package:fake_store_api/utils/utils_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GridProducts extends StatelessWidget {
   const GridProducts({super.key, required this.listProducts});
@@ -19,7 +20,7 @@ class GridProducts extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        childAspectRatio: 0.53,
+        childAspectRatio: 0.50,
       ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
@@ -43,8 +44,8 @@ class GridProducts extends StatelessWidget {
               ),
               Text(
                 product.title!,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: TextStyle(
+                  fontSize: 18.sp,
                   color: Colors.white60,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -56,10 +57,10 @@ class GridProducts extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   service.priceToCurrency(product.price.toDouble()),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
-                    fontSize: 17,
+                    fontSize: 17.sp,
                   ),
                 ),
               ),

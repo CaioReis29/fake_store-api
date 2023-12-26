@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fake_store_api/screens/auth/sign_in_screen.dart';
 import 'package:fake_store_api/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -59,7 +60,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       child: Text(
                         "Sign In",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -69,7 +70,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
