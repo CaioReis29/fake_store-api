@@ -6,7 +6,6 @@ import 'package:fake_store_api/utils/endpoints.dart';
 
 class ProductsRepository {
   Dio dio = Dio();
-  // final ProductsDB _productsDB = ProductsDB.instance;
 
   Future<List<Products>> getAllProducts() async {
     try {
@@ -15,9 +14,10 @@ class ProductsRepository {
       if (res.statusCode == 200) {
         final List<dynamic> data = res.data;
 
-        final result = data.map((json) => Products.fromJson(json)).toList();
+        final List<Products> products =
+            data.map((json) => Products.fromJson(json)).toList();
 
-        return result;
+        return products;
       } else {
         throw Exception();
       }
