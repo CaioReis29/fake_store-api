@@ -3,6 +3,7 @@ import 'package:fake_store_api/components/my_text_field.dart';
 import 'package:fake_store_api/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -119,12 +120,12 @@ class _SignInScreenState extends State<SignInScreen> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Confirm",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 20.sp,
                           ),
                         ),
                       ),

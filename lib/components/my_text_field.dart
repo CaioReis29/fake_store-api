@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -71,7 +72,7 @@ class MyTextField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.grey[700],
-          fontSize: 18,
+          fontSize: 18.sp,
         ),
         errorText: errorMessage,
       ),

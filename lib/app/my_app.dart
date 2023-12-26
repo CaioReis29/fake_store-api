@@ -1,12 +1,14 @@
 import 'package:fake_store_api/screens/auth/auth_screen.dart';
 import 'package:fake_store_api/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Fake Store API',
@@ -24,25 +26,25 @@ class MyApp extends StatelessWidget {
         ),
         brightness: Brightness.dark,
         primaryColor: const Color.fromARGB(255, 243, 208, 113),
-        textTheme: const TextTheme(
+        textTheme: TextTheme(
           bodySmall: TextStyle(
-            fontSize: 15,
+            fontSize: 14.sp,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 243, 208, 113),
+            color: const Color.fromARGB(255, 243, 208, 113),
           ),
           bodyMedium: TextStyle(
-            fontSize: 17,
+            fontSize: 15.sp,
             fontWeight: FontWeight.w500,
           ),
           titleLarge: TextStyle(
-            fontSize: 35,
+            fontSize: 30.sp,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 243, 208, 113),
+            color: const Color.fromARGB(255, 243, 208, 113),
           ),
           titleMedium: TextStyle(
-            fontSize: 35,
+            fontSize: 25.sp,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 243, 208, 113),
+            color: const Color.fromARGB(255, 243, 208, 113),
           ),
         ),
         useMaterial3: true,

@@ -1,6 +1,7 @@
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailsProduct extends StatelessWidget {
   const DetailsProduct({super.key, required this.cubit});
@@ -96,7 +97,7 @@ class DetailsProduct extends StatelessWidget {
                   "ADD to Cart",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 20,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -113,7 +114,7 @@ class DetailsProduct extends StatelessWidget {
                   "Buy",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 20,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:fake_store_api/cubits/products_cubit/all_products_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchbarProduct extends StatelessWidget {
   const SearchbarProduct({
@@ -33,7 +34,7 @@ class SearchbarProduct extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             labelText: 'Search Products',
-            labelStyle: const TextStyle(fontSize: 16),
+            labelStyle: TextStyle(fontSize: 16.sp),
             border: OutlineInputBorder(
               borderSide: BorderSide(
                 color: Theme.of(context).primaryColor,
