@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:fake_store_api/data/models/all_products/products.dart';
 import 'package:fake_store_api/data/repositories/all_products/products_repository.dart';
+import 'package:fake_store_api/shared/products/products_db.dart';
 import 'package:flutter/material.dart';
 
 part 'all_products_state.dart';
@@ -17,7 +18,11 @@ class AllProductsCubit extends Cubit<AllProductsState> {
   Future<void> getAllProducts() async {
     emit(AllProductsLoading());
     final result = await repo.getAllProducts();
+    final ProductDB db = ProductDB();
     try {
+      for (var product in result) {
+        await db.insertProduct(product);
+      }
       emit(AllProductsSucess(products: result));
     } catch (e) {
       log(e.toString());
