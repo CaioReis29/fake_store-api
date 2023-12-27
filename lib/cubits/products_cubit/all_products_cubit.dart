@@ -17,13 +17,20 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
   Future<void> getAllProducts() async {
     emit(AllProductsLoading());
-    final result = await repo.getAllProducts();
     final ProductDB db = ProductDB();
     try {
-      for (var product in result) {
-        await db.insertProduct(product);
+      final List<Products> productsDB = await db.getProducts();
+
+      if (productsDB.isNotEmpty) {
+        emit(AllProductsSucess(products: productsDB));
+      } else {
+        final result = await repo.getAllProducts();
+
+        for (var product in result) {
+          await db.insertProduct(product);
+        }
+        emit(AllProductsSucess(products: result));
       }
-      emit(AllProductsSucess(products: result));
     } catch (e) {
       log(e.toString());
       emit(AllProductsFailure());
