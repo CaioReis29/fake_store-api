@@ -101,8 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             bloc: categoryCubit,
                             builder: (context, state) {
                               if (state is AllCategoriesLoading) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 );
                               } else if (state is AllCategoriesFailure) {
                                 return const Center(
