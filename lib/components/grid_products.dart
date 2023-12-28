@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
 import 'package:fake_store_api/data/models/all_products/products.dart';
 import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
@@ -7,14 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class GridProducts extends StatelessWidget {
+class GridProducts extends StatefulWidget {
   const GridProducts({super.key, required this.listProducts});
 
   final List<Products> listProducts;
 
   @override
+  State<GridProducts> createState() => _GridProductsState();
+}
+
+class _GridProductsState extends State<GridProducts> {
+  Future<bool> checkInternet() async =>
+      await ConnectivityWrapper.instance.isConnected;
+
+  @override
   Widget build(BuildContext context) {
     final UtilsServices service = UtilsServices();
+
     return SliverGrid.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -22,9 +33,9 @@ class GridProducts extends StatelessWidget {
         mainAxisSpacing: 10,
         childAspectRatio: 0.50,
       ),
-      itemCount: listProducts.length,
+      itemCount: widget.listProducts.length,
       itemBuilder: (context, index) {
-        final product = listProducts[index];
+        final product = widget.listProducts[index];
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6),
           child: Column(
@@ -36,8 +47,8 @@ class GridProducts extends StatelessWidget {
                 child: Card(
                   clipBehavior: Clip.antiAlias,
                   color: Colors.white,
-                  child: Image.network(
-                    product.image!,
+                  child: Image.file(
+                    File(product.image!),
                     fit: BoxFit.contain,
                   ),
                 ),
