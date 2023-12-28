@@ -16,6 +16,8 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
   ProductsRepository repo = ProductsRepository();
 
+  final ProductDB db = ProductDB();
+
   final TextEditingController searchController = TextEditingController();
 
   Future<bool> checkInternet() async =>
@@ -23,8 +25,6 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
   Future<void> getAllProducts() async {
     emit(AllProductsLoading());
-
-    final ProductDB db = ProductDB();
 
     try {
       final List<Products> productsDB = await db.getProducts();
@@ -62,9 +62,9 @@ class AllProductsCubit extends Cubit<AllProductsState> {
   }
 
   Future<void> getProductByFilter(String filter) async {
-    final result = await repo.getAllProducts();
+    final products = await db.getProducts();
 
-    final productFilter = result
+    final productFilter = products
         .where(
           (product) => product.category!.toLowerCase().contains(
                 filter.toLowerCase(),
@@ -76,12 +76,12 @@ class AllProductsCubit extends Cubit<AllProductsState> {
   }
 
   Future<void> searchProducts(String value) async {
-    final result = await repo.getAllProducts();
+    final products = await db.getProducts();
 
     if (value.isEmpty) {
-      emit(AllProductsSucess(products: result));
+      emit(AllProductsSucess(products: products));
     } else {
-      final filter = result.where(
+      final filter = products.where(
         (product) => product.title!.toLowerCase().contains(
               value.toLowerCase(),
             ),
