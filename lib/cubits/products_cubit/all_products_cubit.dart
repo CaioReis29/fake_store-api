@@ -1,10 +1,13 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
+import 'package:dio/dio.dart';
 import 'package:fake_store_api/data/models/all_products/products.dart';
 import 'package:fake_store_api/data/repositories/all_products/products_repository.dart';
 import 'package:fake_store_api/shared/products/products_db.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'all_products_state.dart';
 
@@ -15,24 +18,45 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
   final TextEditingController searchController = TextEditingController();
 
+  Future<bool> checkInternet() async =>
+      await ConnectivityWrapper.instance.isConnected;
+
   Future<void> getAllProducts() async {
     emit(AllProductsLoading());
+
     final ProductDB db = ProductDB();
+
     try {
       final List<Products> productsDB = await db.getProducts();
 
-      if (productsDB.isNotEmpty) {
+      bool hasInternet = await checkInternet();
+
+      if (productsDB.isNotEmpty && !hasInternet) {
         emit(AllProductsSucess(products: productsDB));
       } else {
-        final result = await repo.getAllProducts();
+        final products = await repo.getAllProducts();
 
-        for (var product in result) {
-          await db.insertProduct(product);
-        }
-        emit(AllProductsSucess(products: result));
+        Dio dio = Dio();
+        final appDir = await getTemporaryDirectory();
+
+        await Future.wait(products.map((product) async {
+          final Response<List<int>> response = await dio.get<List<int>>(
+            product.image!,
+            options: Options(responseType: ResponseType.bytes),
+          );
+
+          final bytes = response.data!;
+          final file = File('${appDir.path}/product_${product.id}.png');
+          await file.writeAsBytes(bytes);
+
+          product.image = file.path;
+        }));
+
+        emit(AllProductsSucess(products: products));
       }
     } catch (e) {
       log(e.toString());
+
       emit(AllProductsFailure());
     }
   }
@@ -53,6 +77,7 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
   Future<void> searchProducts(String value) async {
     final result = await repo.getAllProducts();
+
     if (value.isEmpty) {
       emit(AllProductsSucess(products: result));
     } else {
