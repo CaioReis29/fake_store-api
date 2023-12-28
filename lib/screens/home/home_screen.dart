@@ -1,4 +1,5 @@
 import 'package:fake_store_api/common/custom_shimmer.dart';
+import 'package:fake_store_api/components/categories_buttons.dart';
 import 'package:fake_store_api/components/grid_products.dart';
 import 'package:fake_store_api/components/my_drawer.dart';
 import 'package:fake_store_api/components/searchbar_product.dart';
@@ -6,7 +7,6 @@ import 'package:fake_store_api/cubits/categories_cubit/all_categories_cubit.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
-
 import '../../cubits/products_cubit/all_products_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -96,62 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SliverToBoxAdapter(
-                          child: BlocBuilder<AllCategoriesCubit,
-                              AllCategoriesState>(
-                            bloc: categoryCubit,
-                            builder: (context, state) {
-                              if (state is AllCategoriesLoading) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                );
-                              } else if (state is AllCategoriesFailure) {
-                                return const Center(
-                                  child: Text(
-                                    "Categories not found!",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                );
-                              } else if (state is AllCategoriesSucess) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                    right: 10,
-                                    bottom: 10,
-                                  ),
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) =>
-                                          ElevatedButton(
-                                        onPressed: () =>
-                                            productsCubit.getProductByFilter(
-                                                state.categories[index]),
-                                        child: Text(
-                                          state.categories[index],
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      separatorBuilder: (c, i) =>
-                                          const SizedBox(width: 10),
-                                      itemCount: state.categories.length,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return const Center(
-                                  child: Text("Error"),
-                                );
-                              }
-                            },
+                          child: CategoriesButtons(
+                            categoriesCubit: categoryCubit,
+                            productsCubit: productsCubit,
                           ),
                         ),
                         GridProducts(listProducts: state.products),
