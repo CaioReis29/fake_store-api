@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
 import 'package:fake_store_api/utils/utils_services.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,8 @@ class DetailsProduct extends StatelessWidget {
         SizedBox(
           height: MediaQuery.sizeOf(context).height * 0.4,
           width: MediaQuery.sizeOf(context).width * 0.85,
-          child: Image.network(
-            cubit.product.image!,
+          child: Image.file(
+            File(cubit.product.image!),
             fit: BoxFit.contain,
           ),
         ),
