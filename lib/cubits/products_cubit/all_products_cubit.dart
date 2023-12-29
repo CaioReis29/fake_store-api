@@ -31,12 +31,14 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
       bool hasInternet = await checkInternet();
 
-      if (productsDB.isNotEmpty && !hasInternet) {
+      if (!hasInternet) {
         emit(AllProductsSucess(products: productsDB));
-      } else {
-        final products = await repo.getAllProducts();
-
+      } else if (productsDB.isNotEmpty) {
+        emit(AllProductsSucess(products: productsDB));
+      } else if (productsDB.isEmpty ||
+          productsDB != await repo.getAllProducts()) {
         Dio dio = Dio();
+        final products = await repo.getAllProducts();
         final appDir = await getTemporaryDirectory();
 
         await Future.wait(products.map((product) async {
@@ -51,6 +53,10 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
           product.image = file.path;
         }));
+
+        for (var product in products) {
+          db.insertProduct(product);
+        }
 
         emit(AllProductsSucess(products: products));
       }

@@ -39,9 +39,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Fake Store',
-          style: Theme.of(context).textTheme.titleLarge,
+        centerTitle: true,
+        title: Row(
+          children: [
+            SizedBox(
+              height: 60,
+              width: 60,
+              child: Hero(
+                tag: 'assets/fake_store_logo.png',
+                child: Image.asset(
+                  'assets/fake_store_logo.png',
+                ),
+              ),
+            ),
+            Text(
+              'Fake Store',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
         ),
       ),
       drawer: const MyDrawer(),
