@@ -1,6 +1,7 @@
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:fake_store_api/screens/auth/auth_screen.dart';
 import 'package:fake_store_api/screens/home/home_screen.dart';
+import 'package:fake_store_api/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -51,8 +52,8 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
         routes: {
+          '/': (context) => const SplashScreen(),
           '/home': (context) => const HomeScreen(),
           // '/product_details': (context) => const SingleProductScreen(),
           '/auth_screen': (context) => const AuthScreen(),
