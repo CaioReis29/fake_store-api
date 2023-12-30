@@ -13,6 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   double height = 0.0;
   double width = 0.0;
+  int timeIcon = 4;
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
       final nav = Navigator.of(context);
 
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 6));
 
       nav.pushReplacement(
         PageRouteBuilder(
@@ -48,7 +49,12 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.topCenter,
             child: AnimatedContainer(
               curve: Curves.bounceInOut,
-              duration: const Duration(seconds: 2),
+              onEnd: () => setState(() {
+                height = 0;
+                width = 0;
+                timeIcon = 1;
+              }),
+              duration: Duration(seconds: timeIcon),
               height: height,
               width: width,
               child: Hero(
@@ -75,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 40.sp,
                     color: Theme.of(context).primaryColor,
                   ),
-                  speed: const Duration(milliseconds: 200),
+                  speed: const Duration(milliseconds: 150),
                 ),
               ],
             ),
