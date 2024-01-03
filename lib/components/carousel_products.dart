@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:fake_store_api/common/custom_shimmer.dart';
 import 'package:fake_store_api/cubits/products_cubit/all_products_cubit.dart';
+import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
+import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
+import 'package:fake_store_api/screens/single_product/single_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -97,7 +100,20 @@ class _CarouselProductsState extends State<CarouselProducts> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BlocProvider<SingleProductCubit>(
+                                create: (context) => SingleProductCubit(
+                                  SingleProductRepository(),
+                                  state.products[index],
+                                ),
+                                child: SingleProductScreen(
+                                    product: state.products[index]),
+                              ),
+                            ),
+                          ),
                           style: Theme.of(context).elevatedButtonTheme.style,
                           child: Text(
                             "More Details",
