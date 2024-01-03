@@ -1,4 +1,5 @@
 import 'package:fake_store_api/common/custom_shimmer.dart';
+import 'package:fake_store_api/components/carousel_products.dart';
 import 'package:fake_store_api/components/categories_buttons.dart';
 import 'package:fake_store_api/components/grid_products.dart';
 import 'package:fake_store_api/components/my_drawer.dart';
@@ -101,6 +102,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: CustomScrollView(
                       scrollDirection: Axis.vertical,
                       slivers: [
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              "New Products",
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: CarouselProducts(
+                              cubit: productsCubit,
+                            ),
+                          ),
+                        ),
                         SliverToBoxAdapter(
                           child: Padding(
                             padding: const EdgeInsets.all(10),
