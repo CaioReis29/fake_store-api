@@ -2,6 +2,7 @@ import 'package:fake_store_api/components/details_product.dart';
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
 import 'package:fake_store_api/data/models/all_products/products.dart';
 import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
+import 'package:fake_store_api/screens/single_product/widgets/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,15 +43,11 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               child: Text("Product not found"),
             );
           } else if (state is SingleProductLoaging) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingSingleProduct();
           } else if (state is SingleProductSucess) {
             return DetailsProduct(cubit: cubit);
           } else {
-            return const Center(
-              child: Text("Error"),
-            );
+            return const SizedBox();
           }
         },
       ),
