@@ -20,6 +20,7 @@ class ProductDB {
     return await openDatabase(
       path,
       version: 1,
+      readOnly: false,
       onConfigure: (db) async => await db.execute('PRAGMA foreign_keys = ON'),
       onCreate: (Database db, int version) async {
         await db.execute('''
@@ -78,5 +79,37 @@ class ProductDB {
         ),
       );
     });
+  }
+
+  Future<Products?> getSingleProduct(int id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'products',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Products(
+        id: maps[0]['id'],
+        title: maps[0]['title'],
+        price: maps[0]['price'],
+        description: maps[0]['description'],
+        category: maps[0]['category'],
+        image: maps[0]['image'],
+        rating: Rating(
+          rate: maps[0]['rate'],
+          count: maps[0]['count'],
+        ),
+      );
+    } else {
+      Exception();
+    }
+    return null;
+  }
+
+  Future<int> deleteAllProduts() async {
+    final db = await database;
+    return await db.delete('products');
   }
 }
