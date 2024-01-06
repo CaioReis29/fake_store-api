@@ -15,7 +15,7 @@
   <img src="https://github.com/CaioReis29/fake_store-api/assets/114621145/eb8f5d00-80ea-4cfb-96c2-a03c50e17e9b" alt="App Gif">
 </p>
 
-### <p>Além de criar a própria slash screen nativa para Android e IOS utilizando o package <a href="https://pub.dev/packages/flutter_native_splash">flutter_native_splash</a>, criei uma tela para uma splash screen animada para enriquecer a aplicação.</p>
+### <p>Além de criar a própria slpash screen nativa para Android e IOS utilizando o package <a href="https://pub.dev/packages/flutter_native_splash">flutter_native_splash</a>, criei uma splash screen animada para enriquecer a aplicação.</p>
 
 ## 🧊: Bloc/Cubit:
 
