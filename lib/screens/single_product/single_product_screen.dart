@@ -1,6 +1,6 @@
 import 'package:fake_store_api/components/details_product.dart';
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
-import 'package:fake_store_api/data/dtos/products/products_dto.dart';
+import 'package:fake_store_api/data/products/products.dart';
 import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
 import 'package:fake_store_api/screens/single_product/widgets/loading_page.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SingleProductScreen extends StatefulWidget {
   const SingleProductScreen({super.key, required this.product});
 
-  final ProductsDto product;
+  final Product product;
 
   @override
   State<SingleProductScreen> createState() => _SingleProductScreenState();

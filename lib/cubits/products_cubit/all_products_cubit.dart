@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:dio/dio.dart';
-import 'package:fake_store_api/data/dtos/products/products_dto.dart';
+import 'package:fake_store_api/data/products/products.dart';
 import 'package:fake_store_api/data/repositories/all_products/products_repository.dart';
 import 'package:fake_store_api/shared/products/products_db.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class AllProductsCubit extends Cubit<AllProductsState> {
     emit(AllProductsLoading());
 
     try {
-      final List<ProductsDto> productsDB = await db.getProducts();
+      final List<Product> productsDB = await db.getProducts();
 
       bool hasInternet = await checkInternet();
 
@@ -60,23 +60,20 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
         emit(AllProductsSucess(products: products));
       }
-    } catch (e) {
+    } catch (e, s) {
       log(e.toString());
+      log(s.toString());
 
       emit(AllProductsFailure());
+
+      rethrow;
     }
   }
 
   Future<void> getProductByFilter(String filter) async {
     final products = await db.getProducts();
 
-    final productFilter = products
-        .where(
-          (product) => product.category!.toLowerCase().contains(
-                filter.toLowerCase(),
-              ),
-        )
-        .toList();
+    final productFilter = products.where((product) => product.category!.toLowerCase().contains( filter.toLowerCase())).toList();
 
     emit(AllProductsSucess(products: productFilter));
   }

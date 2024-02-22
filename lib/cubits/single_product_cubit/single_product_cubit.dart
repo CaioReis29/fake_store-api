@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
-import 'package:fake_store_api/data/dtos/products/products_dto.dart';
+import 'package:fake_store_api/data/products/products.dart';
 import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
 import 'package:fake_store_api/shared/products/products_db.dart';
 
@@ -12,14 +12,14 @@ class SingleProductCubit extends Cubit<SingleProductState> {
   SingleProductCubit(this.repo, this.product) : super(SingleProductInitial());
 
   SingleProductRepository repo;
-  ProductsDto product;
+  Product product;
 
   Future<bool> checkInternet() async =>
       await ConnectivityWrapper.instance.isConnected;
 
   Future<void> getSingleProduct() async {
     ProductDB db = ProductDB();
-    List<ProductsDto> products = await db.getProducts();
+    List<Product> products = await db.getProducts();
     bool hasInternet = await checkInternet();
 
     emit(SingleProductLoaging());
@@ -31,7 +31,7 @@ class SingleProductCubit extends Cubit<SingleProductState> {
         final result = await repo.getSingleProduct(product.id!);
         emit(SingleProductSucess(result));
       } else {
-        ProductsDto? productDB = await db.getSingleProduct(product.id!);
+        Product? productDB = await db.getSingleProduct(product.id!);
         emit(SingleProductSucess(productDB!));
       }
     } catch (e) {

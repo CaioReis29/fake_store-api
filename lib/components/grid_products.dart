@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
-import 'package:fake_store_api/data/dtos/products/products_dto.dart';
+import 'package:fake_store_api/data/products/products.dart';
 import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
 import 'package:fake_store_api/screens/single_product/single_product_screen.dart';
 import 'package:fake_store_api/core/utils/utils_services.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class GridProducts extends StatefulWidget {
   const GridProducts({super.key, required this.listProducts});
 
-  final List<ProductsDto> listProducts;
+  final List<Product> listProducts;
 
   @override
   State<GridProducts> createState() => _GridProductsState();
