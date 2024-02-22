@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:dio/dio.dart';
-import 'package:fake_store_api/data/models/all_products/products.dart';
+import 'package:fake_store_api/data/dtos/products/products_dto.dart';
 import 'package:fake_store_api/data/repositories/all_products/products_repository.dart';
 import 'package:fake_store_api/shared/products/products_db.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +12,9 @@ import 'package:path_provider/path_provider.dart';
 part 'all_products_state.dart';
 
 class AllProductsCubit extends Cubit<AllProductsState> {
-  AllProductsCubit() : super(AllProductsInitial());
+  ProductsRepository repo;
 
-  ProductsRepository repo = ProductsRepository();
+  AllProductsCubit(this.repo) : super(AllProductsInitial());
 
   final ProductDB db = ProductDB();
 
@@ -27,7 +27,7 @@ class AllProductsCubit extends Cubit<AllProductsState> {
     emit(AllProductsLoading());
 
     try {
-      final List<Products> productsDB = await db.getProducts();
+      final List<ProductsDto> productsDB = await db.getProducts();
 
       bool hasInternet = await checkInternet();
 

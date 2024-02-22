@@ -9,6 +9,6 @@ final class AllProductsLoading extends AllProductsState {}
 final class AllProductsFailure extends AllProductsState {}
 
 final class AllProductsSucess extends AllProductsState {
-  List<Products> products;
+  List<ProductsDto> products;
   AllProductsSucess({required this.products});
 }

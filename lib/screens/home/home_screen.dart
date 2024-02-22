@@ -4,10 +4,11 @@ import 'package:fake_store_api/components/categories_buttons.dart';
 import 'package:fake_store_api/components/grid_products.dart';
 import 'package:fake_store_api/components/my_drawer.dart';
 import 'package:fake_store_api/components/searchbar_product.dart';
+import 'package:fake_store_api/core/injects.dart';
 import 'package:fake_store_api/cubits/categories_cubit/all_categories_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:fake_store_api/utils/utils_services.dart';
+import 'package:fake_store_api/core/utils/utils_services.dart';
 import '../../cubits/products_cubit/all_products_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AllProductsCubit productsCubit = AllProductsCubit();
+  final productsCubit = inject<AllProductsCubit>();
   final AllCategoriesCubit categoryCubit = AllCategoriesCubit();
 
   final UtilsServices service = UtilsServices();

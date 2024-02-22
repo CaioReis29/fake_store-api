@@ -1,5 +1,5 @@
-import 'package:fake_store_api/data/models/all_products/products.dart';
-import 'package:fake_store_api/data/models/all_products/rating.dart';
+import 'package:fake_store_api/data/dtos/products/products_dto.dart';
+import 'package:fake_store_api/data/dtos/products/rating_dto.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -47,12 +47,12 @@ class ProductDB {
     );
   }
 
-  Future<void> insertProduct(Products product) async {
+  Future<void> insertProduct(ProductsDto product) async {
     final Database db = await database;
 
-    int ratingId = await db.insert('ratings', product.rating!.toMap());
+    int ratingId = await db.insert('ratings', product.rating!.toJson());
 
-    Map<String, dynamic> productMap = product.toMap();
+    Map<String, dynamic> productMap = product.toJson();
     productMap['rating'] = ratingId;
 
     await db.insert(
@@ -62,18 +62,18 @@ class ProductDB {
     );
   }
 
-  Future<List<Products>> getProducts() async {
+  Future<List<ProductsDto>> getProducts() async {
     final Database db = await database;
     final List<Map<String, dynamic>> maps = await db.query('products');
     return List.generate(maps.length, (i) {
-      return Products(
+      return ProductsDto(
         id: maps[i]['id'],
         title: maps[i]['title'],
         price: maps[i]['price'],
         description: maps[i]['description'],
         category: maps[i]['category'],
         image: maps[i]['image'],
-        rating: Rating(
+        rating: RatingDto(
           rate: maps[i]['rate'],
           count: maps[i]['count'],
         ),
@@ -81,7 +81,7 @@ class ProductDB {
     });
   }
 
-  Future<Products?> getSingleProduct(int id) async {
+  Future<ProductsDto?> getSingleProduct(int id) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       'products',
@@ -90,14 +90,14 @@ class ProductDB {
     );
 
     if (maps.isNotEmpty) {
-      return Products(
+      return ProductsDto(
         id: maps[0]['id'],
         title: maps[0]['title'],
         price: maps[0]['price'],
         description: maps[0]['description'],
         category: maps[0]['category'],
         image: maps[0]['image'],
-        rating: Rating(
+        rating: RatingDto(
           rate: maps[0]['rate'],
           count: maps[0]['count'],
         ),

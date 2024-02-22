@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:fake_store_api/utils/endpoints.dart';
+import 'package:fake_store_api/core/utils/endpoints.dart';
 
 class SignUpRepository {
   final dio = Dio();

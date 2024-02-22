@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:fake_store_api/shared/save_infos.dart';
-import 'package:fake_store_api/utils/endpoints.dart';
+import 'package:fake_store_api/core/utils/endpoints.dart';
 
 class SignInRepository {
   final dio = Dio();
