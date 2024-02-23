@@ -6,10 +6,11 @@ import 'package:fake_store_api/components/my_drawer.dart';
 import 'package:fake_store_api/components/searchbar_product.dart';
 import 'package:fake_store_api/core/injects.dart';
 import 'package:fake_store_api/cubits/categories_cubit/all_categories_cubit.dart';
+import 'package:fake_store_api/cubits/products_cubit/products_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store_api/core/utils/utils_services.dart';
-import '../../cubits/products_cubit/all_products_cubit.dart';
+import '../../cubits/products_cubit/products_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,8 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final productsCubit = inject<AllProductsCubit>();
-  final AllCategoriesCubit categoryCubit = AllCategoriesCubit();
+  final productsCubit = inject<ProductsCubit>();
+  final categoryCubit = inject<CategoriesCubit>();
 
   final UtilsServices service = UtilsServices();
 
@@ -49,15 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 60,
               child: Hero(
                 tag: 'assets/fake_store_logo.png',
-                child: Image.asset(
-                  'assets/fake_store_logo.png',
-                ),
+                child: Image.asset('assets/fake_store_logo.png'),
               ),
             ),
-            Text(
-              'Fake Store',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('Fake Store',style: Theme.of(context).textTheme.titleLarge),
           ],
         ),
       ),
@@ -66,11 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SearchbarProduct(cubit: productsCubit),
           Expanded(
-            child: BlocBuilder<AllProductsCubit, AllProductsState>(
+            child: BlocBuilder<ProductsCubit, ProductsState>(
               bloc: productsCubit,
-              builder: (context, state) {
-                if (state is AllProductsLoading) {
-                  return GridView.count(
+              builder: (context, state) => state.maybeWhen(
+                loading: () => GridView.count(
                     physics: const BouncingScrollPhysics(),
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
@@ -84,18 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                  );
-                } else if (state is AllProductsFailure) {
-                  return const Center(
-                    child: Text(
-                      "Products not found!",
-                      style: TextStyle(
-                        color: Colors.red,
-                      ),
-                    ),
-                  );
-                } else if (state is AllProductsSucess) {
-                  return RefreshIndicator(
+                  ),
+                error: (exception, stackTrace) => const Center(child: Text("Products not found!",style: TextStyle(color: Colors.red))),
+                success: (products) => RefreshIndicator(
                     color: Theme.of(context).primaryColor,
                     backgroundColor: Colors.white,
                     displacement: 4,
@@ -106,10 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         SliverToBoxAdapter(
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "New Products",
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
+                            child: Text("New Products", style: Theme.of(context).textTheme.titleLarge),
                           ),
                         ),
                         SliverToBoxAdapter(
@@ -135,18 +118,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             productsCubit: productsCubit,
                           ),
                         ),
-                        GridProducts(listProducts: state.products),
+                        GridProducts(listProducts: products!),
                       ],
                     ),
-                  );
-                } else {
-                  return const Center(
-                    child: Text(
-                      "Error!",
-                    ),
-                  );
-                }
-              },
+                  ),
+                orElse: () => const Center(child: Text("Error!")),
+              ),
             ),
           ),
         ],

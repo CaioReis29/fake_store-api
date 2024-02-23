@@ -1,15 +1,16 @@
-part of 'single_product_cubit.dart';
+import 'package:fake_store_api/data/products/products.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class SingleProductState {}
+part 'single_product_state.freezed.dart';
 
-final class SingleProductInitial extends SingleProductState {}
+@freezed
+class SingleProductState with _$SingleProductState {
+  const factory SingleProductState.initial() = InitialSingleProductState;
 
-final class SingleProductFailure extends SingleProductState {}
+  const factory SingleProductState.loading() = LoadingSingleProductState;
 
-final class SingleProductLoaging extends SingleProductState {}
+  const factory SingleProductState.error({required Object exception, required StackTrace stackTrace}) = ErrorSingleProductState;
 
-final class SingleProductSucess extends SingleProductState {
-  final Product product;
+  const factory SingleProductState.success(Product product) = SuccessSingleProductState;
 
-  SingleProductSucess(this.product);
 }

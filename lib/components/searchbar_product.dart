@@ -1,4 +1,4 @@
-import 'package:fake_store_api/cubits/products_cubit/all_products_cubit.dart';
+import 'package:fake_store_api/cubits/products_cubit/products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,7 +8,7 @@ class SearchbarProduct extends StatelessWidget {
     required this.cubit,
   });
 
-  final AllProductsCubit cubit;
+  final ProductsCubit cubit;
 
   @override
   Widget build(BuildContext context) {

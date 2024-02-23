@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
 import 'package:fake_store_api/core/utils/utils_services.dart';
+import 'package:fake_store_api/data/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailsProduct extends StatelessWidget {
-  const DetailsProduct({super.key, required this.cubit});
+  const DetailsProduct({super.key, required this.product});
 
-  final SingleProductCubit cubit;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class DetailsProduct extends StatelessWidget {
           height: MediaQuery.sizeOf(context).height * 0.4,
           width: MediaQuery.sizeOf(context).width * 0.85,
           child: Image.file(
-            File(cubit.product.image!),
+            File(product.image!),
             fit: BoxFit.contain,
           ),
         ),
@@ -31,7 +31,7 @@ class DetailsProduct extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cubit.product.title!,
+                    product.title!,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(
@@ -45,7 +45,7 @@ class DetailsProduct extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
-                        cubit.product.category!,
+                        product.category!,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -61,7 +61,7 @@ class DetailsProduct extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
-                        service.priceToCurrency(cubit.product.price.toDouble()),
+                        service.priceToCurrency(product.price.toDouble()),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -75,7 +75,7 @@ class DetailsProduct extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    cubit.product.description!,
+                    product.description!,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],

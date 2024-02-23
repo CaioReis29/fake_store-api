@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:fake_store_api/common/custom_shimmer.dart';
-import 'package:fake_store_api/cubits/products_cubit/all_products_cubit.dart';
-import 'package:fake_store_api/cubits/single_product_cubit/single_product_cubit.dart';
-import 'package:fake_store_api/data/repositories/single_product/single_product_repository.dart';
+import 'package:fake_store_api/cubits/products_cubit/products_cubit.dart';
+import 'package:fake_store_api/cubits/products_cubit/products_state.dart';
 import 'package:fake_store_api/screens/single_product/single_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,7 @@ class CarouselProducts extends StatefulWidget {
     required this.cubit,
   });
 
-  final AllProductsCubit cubit;
+  final ProductsCubit cubit;
 
   @override
   State<CarouselProducts> createState() => _CarouselProductsState();
@@ -29,19 +28,14 @@ class _CarouselProductsState extends State<CarouselProducts> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
 
-    return BlocBuilder(
+    return BlocBuilder<ProductsCubit, ProductsState>(
       bloc: widget.cubit,
-      builder: (context, state) {
-        if (state is AllProductsFailure) {
-          return SizedBox(
+      builder: (context, state) => state.maybeWhen(
+        error: (e,s ) => SizedBox(
             height: height * 0.35,
             width: width * 0.9,
-            child: const Center(
-              child: Text("Products not found!"),
-            ),
-          );
-        } else if (state is AllProductsLoading) {
-          return Container(
+            child: const Center(child: Text("Products not found!"))),
+        loading: () => Container(
             color: Colors.white,
             height: height * 0.35,
             width: width * 0.9,
@@ -52,18 +46,8 @@ class _CarouselProductsState extends State<CarouselProducts> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               childAspectRatio: 0.80,
-              children: List.generate(
-                10,
-                (index) => CustomShimmer(
-                  height: height * 0.35,
-                  width: width * 0.9,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-          );
-        } else if (state is AllProductsSucess) {
-          return Column(
+              children: List.generate(10, (index) => CustomShimmer(height: height * 0.35, width: width * 0.9,borderRadius: BorderRadius.circular(20))))),
+        success: (products) => Column(
             children: [
               SizedBox(
                 height: height * 0.42,
@@ -78,7 +62,7 @@ class _CarouselProductsState extends State<CarouselProducts> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.file(
-                              File(state.products[index].image!),
+                              File(products![index].image!),
                               fit: BoxFit.fill,
                               width: MediaQuery.of(context).size.width * 0.45,
                               height: height * 0.25,
@@ -88,7 +72,7 @@ class _CarouselProductsState extends State<CarouselProducts> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            state.products[index].title!,
+                            products[index].title!,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
@@ -99,28 +83,9 @@ class _CarouselProductsState extends State<CarouselProducts> {
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  BlocProvider<SingleProductCubit>(
-                                create: (context) => SingleProductCubit(
-                                  SingleProductRepository(),
-                                  state.products[index],
-                                ),
-                                child: SingleProductScreen(
-                                    product: state.products[index]),
-                              ),
-                            ),
-                          ),
+                        ElevatedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProductScreen(product: products[index]))),
                           style: Theme.of(context).elevatedButtonTheme.style,
-                          child: Text(
-                            "More Details",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
+                          child: Text("More Details", style: TextStyle(color: Theme.of(context).primaryColor)),
                         ),
                       ],
                     );
@@ -143,23 +108,11 @@ class _CarouselProductsState extends State<CarouselProducts> {
                       activeDotColor: Theme.of(context).primaryColor,
                       dotColor: Colors.white,
                       dotHeight: 12,
-                      dotWidth: 35,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        } else {
-          return SizedBox(
+                      dotWidth: 35,))))]),
+        orElse: () => SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.35,
             width: MediaQuery.sizeOf(context).width * 0.9,
-            child: const Center(
-              child: Text("Products not found!"),
-            ),
-          );
-        }
-      },
+            child: const Center(child: Text("Products not found!")))),
     );
   }
 }

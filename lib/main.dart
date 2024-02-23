@@ -1,6 +1,5 @@
 import 'package:fake_store_api/bloc_observer.dart';
 import 'package:fake_store_api/core/injects.dart';
-import 'package:fake_store_api/cubits/categories_cubit/all_categories_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fake_store_api/core/app/my_app.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +17,7 @@ void main() async {
 
   Bloc.observer = SimpleBlocObserver();
 
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<AllCategoriesCubit>(
-          create: (context) => AllCategoriesCubit(),
-        ),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 
   FlutterNativeSplash.remove();
 }

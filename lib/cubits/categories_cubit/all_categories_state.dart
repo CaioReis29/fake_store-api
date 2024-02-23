@@ -1,15 +1,15 @@
-part of 'all_categories_cubit.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class AllCategoriesState {}
+part 'all_categories_state.freezed.dart';
 
-final class AllCategoriesInitial extends AllCategoriesState {}
+@freezed
+class CategoriesState with _$CategoriesState {
+  const factory CategoriesState.initial() = InitialCategoriesState;
 
-final class AllCategoriesFailure extends AllCategoriesState {}
+  const factory CategoriesState.loading() = LoadingCategoriesState;
 
-final class AllCategoriesLoading extends AllCategoriesState {}
+  const factory CategoriesState.error({required Object exception, required StackTrace stackTrace}) = ErrorCategoriesState;
 
-final class AllCategoriesSucess extends AllCategoriesState {
-  final List<String> categories;
+  const factory CategoriesState.success(List<String>? categories) = SuccessCategoriesState;
 
-  AllCategoriesSucess({required this.categories});
 }

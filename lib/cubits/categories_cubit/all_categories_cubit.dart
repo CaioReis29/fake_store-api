@@ -1,33 +1,34 @@
+
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:fake_store_api/cubits/categories_cubit/all_categories_state.dart';
 import 'package:fake_store_api/data/repositories/all_categories/categories_repository.dart';
 import 'package:fake_store_api/shared/categories/categories_db.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'all_categories_state.dart';
+class CategoriesCubit extends Cubit<CategoriesState> {
+  CategoriesCubit(this.repo, this.db) : super(const CategoriesState.initial());
 
-class AllCategoriesCubit extends Cubit<AllCategoriesState> {
-  AllCategoriesCubit() : super(AllCategoriesInitial());
-  CategoriesRepository repo = CategoriesRepository();
+  CategoriesRepository repo;
+  CategoriesDB db;
 
   Future<void> getAllCategories() async {
-    emit(AllCategoriesLoading());
-    final CategoriesDB db = CategoriesDB();
+    emit(const CategoriesState.loading());
     try {
       final List<String> categoriesDB = await db.getCategories();
 
       if (categoriesDB.isNotEmpty) {
-        emit(AllCategoriesSucess(categories: categoriesDB));
+        emit(CategoriesState.success(categoriesDB));
       } else {
         final categories = await repo.getAllCategories();
         for (var categorie in categories) {
           await db.insertCategorie(categorie);
         }
-        emit(AllCategoriesSucess(categories: categories));
+        emit(CategoriesState.success(categories));
       }
-    } catch (e) {
+    } catch (e, s) {
       log(e.toString());
-      emit(AllCategoriesFailure());
+      emit(CategoriesState.error(exception: e, stackTrace: s));
     }
   }
 }
